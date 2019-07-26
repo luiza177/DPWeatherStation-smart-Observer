@@ -1,8 +1,8 @@
 #ifndef WEATHERDATA_H
 #define WEATHERDATA_H
 
-#include <vector>
-#include <algorithm>
+// #include <vector>
+// #include <algorithm>
 #include <set>
 #include "interface/ISubject.h"
 
@@ -22,8 +22,8 @@ struct compareWeakPtr
 class WeatherData : public ISubject
 {
 private:
-    // std::set<std::weak_ptr<IObserver>,compareWeakPtr> m_observers;
-    std::vector<std::weak_ptr<IObserver>> m_observers;
+    std::set<std::shared_ptr<IObserver>,compareWeakPtr> m_observers;
+    // std::vector<std::weak_ptr<IObserver>> m_observers;
     double m_temperature, m_humidity, m_pressure;
 public:
     WeatherData() {}
