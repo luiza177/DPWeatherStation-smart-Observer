@@ -1,25 +1,14 @@
 #include "WeatherData.h"
 
-void WeatherData::registerObserver(std::shared_ptr<IObserver>& obs)
+void WeatherData::registerObserver(IObserver* obs)
 {
-    m_observers.insert(obs);
-    // std::weak_ptr<IObserver> obs_weak = obs; 
-    // m_observers.push_back(obs);
+    std::shared_ptr<IObserver> obs_shared(obs);
+    m_observers.insert(obs_shared);
 }
-void WeatherData::removeObserver(std::shared_ptr<IObserver>& obs)
+void WeatherData::removeObserver(IObserver* obs)
 {
-    m_observers.erase(obs);
-    // std::weak_ptr<IObserver> obs_weak = obs;
-    // m_observers.erase(
-    //     std::remove_if(m_observers.begin(), 
-    //         m_observers.end(), 
-    //         [&](const std::weak_ptr<IObserver>& wptr)
-    //         {
-    //             return wptr.expired() || wptr.lock() == obs;
-    //         }
-    //     ),
-    //     this->m_observers.end()
-    // );
+    auto itr = std::find_if(m_observers.begin(), m_observers.end(), [&obs](auto iobs){ return iobs.get() == obs; });
+    m_observers.erase(itr);
 }
 void WeatherData::notifyObservers()
 {

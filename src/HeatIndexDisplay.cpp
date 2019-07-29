@@ -1,5 +1,11 @@
 #include "HeatIndexDisplay.h"
 
+void HeatIndexDisplay::registerWithSubject(std::shared_ptr<ISubject> weatherData)
+{
+    m_weatherData = weatherData;
+    this->m_weatherData->registerObserver(this);
+}
+
 double HeatIndexDisplay::computeHeatIndex(double ct, double rh) 
 {
     auto t = (9.0 / 5.0) * ct + 32.0;

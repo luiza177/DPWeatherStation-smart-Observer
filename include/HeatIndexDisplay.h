@@ -12,11 +12,9 @@ private:
     std::shared_ptr<ISubject> m_weatherData;
     double computeHeatIndex(double ct, double rh);
 public:
-    HeatIndexDisplay(std::shared_ptr<ISubject> weatherData) : m_weatherData(weatherData) 
-    {
-        this->m_weatherData->registerObserver(shared_from_this());
-    }
-    virtual ~HeatIndexDisplay(){}
+    HeatIndexDisplay() {}
+    virtual ~HeatIndexDisplay() {}
+    void registerWithSubject(std::shared_ptr<ISubject> weatherData);    
     void update(double temp, double humidity, double pressure) override;
     void display() const override;
 };

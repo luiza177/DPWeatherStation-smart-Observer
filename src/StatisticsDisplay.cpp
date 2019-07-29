@@ -1,5 +1,11 @@
 #include "StatisticsDisplay.h"
 
+void StatisticsDisplay::registerWithSubject(std::shared_ptr<ISubject> weatherData)
+{
+    m_weatherData = weatherData;
+    this->m_weatherData->registerObserver(this);
+}
+
 void StatisticsDisplay::update(double temp, double humidity, double pressure)
 {
     m_tempSum += temp;

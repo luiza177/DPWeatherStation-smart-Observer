@@ -8,8 +8,8 @@ class ISubject
 public:
     ISubject() {}
     virtual ~ISubject() {}
-    virtual void registerObserver(std::shared_ptr<IObserver>& obs) = 0;
-    virtual void removeObserver(std::shared_ptr<IObserver>& obs) = 0;
+    virtual void registerObserver(IObserver* obs) = 0;
+    virtual void removeObserver(IObserver* obs) = 0;
     virtual void notifyObservers() = 0;
 };
 

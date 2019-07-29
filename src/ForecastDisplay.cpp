@@ -1,5 +1,11 @@
 #include "ForecastDisplay.h"
 
+void ForecastDisplay::registerWithSubject(std::shared_ptr<ISubject> weatherData)
+{
+    m_weatherData = weatherData;
+    this->m_weatherData->registerObserver(this);
+}
+
 void ForecastDisplay::update(double temp, double humidity, double pressure)
 {
     this->m_lastPressure = m_currentPressure;

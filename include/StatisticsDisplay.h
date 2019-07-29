@@ -15,11 +15,9 @@ private:
 	double m_tempSum = 0.0;
 	int m_numReadings = 0;
 public:
-    StatisticsDisplay(std::shared_ptr<ISubject> weatherData) : m_weatherData(weatherData) 
-    {
-        this->m_weatherData->registerObserver(shared_from_this());
-    }
+    StatisticsDisplay() {}
     virtual ~StatisticsDisplay() {}
+    void registerWithSubject(std::shared_ptr<ISubject> weatherData);
     void update(double temp, double humidity, double pressure) override;
     void display() const override;
 };

@@ -12,11 +12,9 @@ private:
     double m_temperature, m_humidity;
     std::shared_ptr<ISubject> m_weatherData;
 public:
-    CurrentConditionsDisplay(std::shared_ptr<ISubject> weatherData) : m_weatherData(weatherData) 
-    {
-        this->m_weatherData->registerObserver(shared_from_this());
-    }
+    CurrentConditionsDisplay() {}
     virtual ~CurrentConditionsDisplay() {}
+    void registerWithSubject(std::shared_ptr<ISubject> weatherData);
     void update(double temp, double humidity, double pressure) override;
     void display() const override;
 };

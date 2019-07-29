@@ -2,10 +2,9 @@
 #define WEATHERDATA_H
 
 // #include <vector>
-// #include <algorithm>
+#include <algorithm>
 #include <set>
 #include "interface/ISubject.h"
-
 
 struct compareWeakPtr
 {
@@ -13,24 +12,24 @@ struct compareWeakPtr
     {
         auto lhs_shared = lhs.lock();
         auto rhs_shared = rhs.lock();
-        // if(!rhs_shared) { return false; }
-        // if(!lhs_shared) { return true; }
-        return lhs_shared.get() == rhs_shared.get();
+        if(!rhs_shared) { return false; }
+        if(!lhs_shared) { return true; }
+        return lhs_shared.get() < rhs_shared.get();
     }
 };
 
 class WeatherData : public ISubject
 {
 private:
-    std::set<std::shared_ptr<IObserver>,compareWeakPtr> m_observers;
+    std::set<std::shared_ptr<IObserver>> m_observers;
     // std::vector<std::weak_ptr<IObserver>> m_observers;
     double m_temperature, m_humidity, m_pressure;
 public:
     WeatherData() {}
     virtual ~WeatherData() {}
 
-    void registerObserver(std::shared_ptr<IObserver>& obs) override;
-    void removeObserver(std::shared_ptr<IObserver>& obs) override;
+    void registerObserver(IObserver* obs) override;
+    void removeObserver(IObserver* obs) override;
     void notifyObservers() override;
     void measurementsChanged();
     void setMeasurements(double temp, double hum, double press); // TODO: write C++ version of python weather
